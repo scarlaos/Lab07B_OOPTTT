@@ -3,6 +3,18 @@ public class ScoreBoard {
     private int oWins = 0;
     private int ties = 0;
 
+    public int getxWins() {
+        return xWins;
+    }
+
+    public int getoWins() {
+        return oWins;
+    }
+
+    public int getTies() {
+        return ties;
+    }
+
     public void addXWins(){
         this.xWins += 1;
     }
@@ -14,10 +26,10 @@ public class ScoreBoard {
     }
 
     public void addWin(Player p){
-        if(p.getName().equals("X")){
-            xWins++;
-        }else if(p.getName().equals("O")){
-            oWins++;
+        if(p.getSymbol().equals("X")){
+            addXWins();
+        }else if(p.getSymbol().equals("O")){
+            addOWins();
         }
     }
 

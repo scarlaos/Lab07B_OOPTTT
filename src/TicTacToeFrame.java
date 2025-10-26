@@ -10,7 +10,7 @@ public class TicTacToeFrame extends JFrame {
     Player playerO;
 
     JPanel buttonPanel;
-    JPanel resetButton;
+    JButton resetButton;
     JButton quitButton;
     JButton scoreButton;
 
@@ -22,13 +22,26 @@ public class TicTacToeFrame extends JFrame {
         playerX=new Player("Player X","X"); //names and symbol used for the players
         playerO=new Player("Player O","O");
 
-        gameBoardPanel=new GameBoardPanel(); //setup
-        gamePlay = new GamePlay(playerX,playerO,scoreBoard);
         scoreBoard=new ScoreBoard();
 
+        gamePlay = new GamePlay(playerX,playerO,scoreBoard);
+
+        gameBoardPanel=new GameBoardPanel(); //setup
+
+
         buttonPanel=new JPanel();
+        resetButton = new JButton("Reset");
+        quitButton = new JButton("Quit");
+        scoreButton = new JButton("Scoreboard");
+        buttonPanel.add(resetButton);
+        buttonPanel.add(quitButton);
+        buttonPanel.add(scoreButton);
 
         controllerActionListener(); // controller part to connect the logic and buttons
+        resetButtonListener();
+        scoreBoardListener();
+        quitButtonListener();
+
 
         add(gameBoardPanel,BorderLayout.CENTER);
         add(buttonPanel,BorderLayout.SOUTH);
@@ -48,11 +61,40 @@ public class TicTacToeFrame extends JFrame {
                 buttons[r][c].addActionListener((ActionEvent e) ->{
                     Player player = gamePlay.getCurrentPlayer(); // gets current player so game can use the correct order
                     if(gamePlay.makeMove(r,c)){
-                        buttons[r][c].setText(gamePlay.getCurrentPlayer().getSymbol());
+                        buttons[r][c].setText(player.getSymbol());
                     }
                 }
                 );
             }
         }
     }
+
+    private void resetButtonListener(){
+        resetButton.addActionListener((ActionEvent e) -> {
+           gamePlay.resetBoard();
+            JButton[][] buttons = gameBoardPanel.getButtons();
+            for(int i=0; i<3; i++){
+                for(int j=0; j<3; j++){
+                    buttons[i][j].setText("");//clears buttons for all button indexes of rows and cols
+                }
+            }
+
+        });
+    }
+
+    private void scoreBoardListener(){
+        scoreButton.addActionListener((ActionEvent e) -> {
+           String scoreMessage = "Scores:\n" + "Player X Wins:" + scoreBoard.getxWins() + "\n" + "Player O Wins: " + scoreBoard.getoWins() + "\n" + "Ties: " + scoreBoard.getTies();
+           JOptionPane.showMessageDialog(this, scoreMessage,"Scoreboard",JOptionPane.INFORMATION_MESSAGE);
+        });
+    }
+
+    private void quitButtonListener(){
+        quitButton.addActionListener((ActionEvent e) -> System.exit(0));
+    }
+
+    public static void main(String[] args) {
+        new TicTacToeFrame();
+    }
 }
+

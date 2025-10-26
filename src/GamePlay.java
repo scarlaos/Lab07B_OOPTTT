@@ -14,11 +14,19 @@ public class GamePlay {
         this.playerO = o;
         this.scoreBoard = scoreBoard;
         this.currentPlayer = playerX;
+
+        players[0] = playerX;
+        players[1] = playerO;
+
         resetBoard();
     }
 
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public Player getSymbol() {
+        return players[index];
     }
 
     public boolean makeMove(int row, int col) {
@@ -47,6 +55,10 @@ public class GamePlay {
         return true;
     }
 
+    public int getMoveCount(){
+        return moveCount;
+    }
+
     public boolean checkWin() {
         //horizontal
         for(int i=0; i<3; i++) {
@@ -56,15 +68,17 @@ public class GamePlay {
         }
         //vertical
         for(int j=0; j<3; j++){
-            if(!board[0][j].equals("") && board[0][j].equals(board[1][j]) && board[1][j].equals(board[2][0])) {
+            if(!board[0][j].equals("") && board[0][j].equals(board[1][j]) && board[1][j].equals(board[2][j])) {
                 return true;
             }
         }
 
         //diagonals
-        if(!board[0][0].equals("") && board[0][0].equals(board[1][1]) && board[2][1].equals(board[2][2])) {
+        //top left to bottom right
+        if(!board[0][0].equals("") && board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2])) {
             return true;
         }
+        //top right to bottom left
         if(!board[0][2].equals("") && board[0][2].equals(board[1][1]) && board[1][1].equals(board[2][0])) {
             return true;
         }
@@ -89,6 +103,11 @@ public class GamePlay {
 
     public void resetBoard() {
         board = new String[3][3]; // makes cells null
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 3; j++) {
+                board[i][j] = "";
+            }
+        }
         currentPlayer = playerX;
         win = false;
     }
