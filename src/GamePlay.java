@@ -17,6 +17,10 @@ public class GamePlay {
         resetBoard();
     }
 
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
     public boolean makeMove(int row, int col) {
         if(win) return false;
         if(!board[row][col].equals("")) {
@@ -43,7 +47,7 @@ public class GamePlay {
         return true;
     }
 
-    private boolean checkWin() {
+    public boolean checkWin() {
         //horizontal
         for(int i=0; i<3; i++) {
             if (!board[i][0].equals("") && board[i][0].equals(board[i][1]) && board[i][1].equals(board[i][2])) {
