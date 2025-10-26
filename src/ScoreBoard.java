@@ -15,10 +15,10 @@ public class ScoreBoard {
         return ties;
     }
 
-    public void addXWins(){
+    public void addXWins(Player p){
         this.xWins += 1;
     }
-    public void addOWins(){
+    public void addOWins(Player p){
         this.oWins += 1;
     }
     public void addTies(){
@@ -27,9 +27,9 @@ public class ScoreBoard {
 
     public void addWin(Player p){
         if(p.getSymbol().equals("X")){
-            addXWins();
+            addXWins(p);
         }else if(p.getSymbol().equals("O")){
-            addOWins();
+            addOWins(p);
         }
     }
 
